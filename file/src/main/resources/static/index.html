@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload and List</title>
+    <style>
+        /* Basic styling for the form and file list */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        #fileList {
+            margin-top: 20px;
+        }
+        .file-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+        .file-item p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>File Upload and List</h1>
+
+    <!-- File Upload Form -->
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" name="file" id="file">
+        <input type="text" name="uploadedBy" id="uploadedBy" placeholder="Uploaded By">
+        <button type="submit">Upload File</button>
+    </form>
+
+    <!-- File List -->
+    <div id="fileList"></div>
+
+    <!-- Script to handle file upload and fetching files -->
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var fileInput = document.getElementById('file');
+            var uploadedByInput = document.getElementById('uploadedBy');
+
+            var formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+            formData.append('uploadedBy', uploadedByInput.value);
+
+            fetch('/api/files/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('File uploaded:', data);
+                // Optionally update UI to show uploaded file
+                loadFiles();
+            })
+            .catch(error => console.error('Error uploading file:', error));
+        });
+
+        function loadFiles() {
+            fetch('/api/files/all')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Files fetched:', data);
+                var fileList = document.getElementById('fileList');
+                fileList.innerHTML = '';
+                data.forEach(file => {
+                    var fileItem = document.createElement('div');
+                    fileItem.classList.add('file-item');
+                    fileItem.innerHTML = `
+                        <p>File ID: ${file.id}</p>
+                        <p>Uploaded By: ${file.uploadedBy}</p>
+                        <p>File Link: <a href="${file.fileLink}" target="_blank">${file.fileLink}</a></p>
+                    `;
+                    fileList.appendChild(fileItem);
+                });
+            })
+            .catch(error => console.error('Error fetching files:', error));
+        }
+
+        // Initial load of files when page loads
+        loadFiles();
+    </script>
+</body>
+</html>
