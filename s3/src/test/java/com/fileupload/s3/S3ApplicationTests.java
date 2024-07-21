@@ -1,10 +1,10 @@
-package com.lets.file;
+package com.fileupload.s3;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class FileApplicationTests {
+class S3ApplicationTests {
 
 	@Test
 	void contextLoads() {

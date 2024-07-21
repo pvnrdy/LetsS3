@@ -1,13 +1,13 @@
-package com.lets.file;
+package com.fileupload.s3;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FileApplication {
+public class S3Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FileApplication.class, args);
+		SpringApplication.run(S3Application.class, args);
 	}
 
 }
