@@ -2,7 +2,7 @@
 
 ## A simple File upload service implemented using Spring and HTML
 
-A pun project done on a weekend when feeling bored, this projects can be used to upload files to S3 and store the meta data in DB
+A pun project done on a weekend when feeling bored, this project can be used to upload files to S3 and store the meta data in DB
 
 ## Changes related to DB :
 
